@@ -1,4 +1,4 @@
 .env
-.series_config.json
+series_config.json
 __pycache__/
 venv_*
