@@ -1,0 +1,28 @@
+{
+  "series": [
+    {
+      "imdb_id": "tt2531336",
+      "title": "Lupin",
+      "year": "2021",
+      "seasons": [4] 
+    },
+    {
+      "imdb_id": "tt22202452",
+      "title": "Pluribus",
+      "year": "2025",
+      "seasons": [2] 
+    },
+    {
+      "imdb_id": "tt31835154",
+      "title": "Amsterdam Empire",
+      "year": "2025",
+      "seasons": []
+    }, 
+    {
+      "imdb_id": "tt28466970",
+      "title": "Ferry",
+      "year": "2023",
+      "seasons": [2]
+    }   
+  ]
+}
