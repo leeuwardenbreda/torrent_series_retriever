@@ -1,0 +1,344 @@
+2026-01-12 15:49:14,581 [INFO] Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-01-12 15:49:14,655 [INFO] Added job "run_all_searches" to job store "default"
+2026-01-12 15:49:14,656 [INFO] Scheduler started
+2026-01-12 15:49:14,661 [INFO] Media Retriever gestart
+2026-01-12 15:49:14,733 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.7.18.81:8000
+2026-01-12 15:49:14,734 [INFO] [33mPress CTRL+C to quit[0m
+2026-01-12 15:49:29,069 [INFO] 127.0.0.1 - - [12/Jan/2026 15:49:29] "[33mGET / HTTP/1.1[0m" 404 -
+2026-01-12 15:49:29,688 [INFO] 127.0.0.1 - - [12/Jan/2026 15:49:29] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-12 15:49:46,351 [INFO] 10.7.18.81 - - [12/Jan/2026 15:49:46] "[33mGET / HTTP/1.1[0m" 404 -
+2026-01-12 15:49:47,059 [INFO] 10.7.18.81 - - [12/Jan/2026 15:49:47] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-12 15:49:51,420 [INFO] 127.0.0.1 - - [12/Jan/2026 15:49:51] "[33mGET / HTTP/1.1[0m" 404 -
+2026-01-12 15:49:52,034 [INFO] 127.0.0.1 - - [12/Jan/2026 15:49:52] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-12 15:51:40,881 [INFO] 127.0.0.1 - - [12/Jan/2026 15:51:40] "GET /config HTTP/1.1" 200 -
+2026-01-12 15:52:10,476 [INFO] 127.0.0.1 - - [12/Jan/2026 15:52:10] "GET /config HTTP/1.1" 200 -
+2026-01-12 15:52:59,738 [INFO] Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-01-12 15:52:59,742 [INFO] Added job "run_all_searches" to job store "default"
+2026-01-12 15:52:59,743 [INFO] Scheduler started
+2026-01-12 15:52:59,749 [INFO] Media Retriever gestart
+2026-01-12 15:52:59,789 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.7.18.81:8000
+2026-01-12 15:52:59,790 [INFO] [33mPress CTRL+C to quit[0m
+2026-01-12 15:53:03,854 [INFO] 127.0.0.1 - - [12/Jan/2026 15:53:03] "[33mGET / HTTP/1.1[0m" 404 -
+2026-01-12 15:53:07,382 [INFO] 127.0.0.1 - - [12/Jan/2026 15:53:07] "GET /config HTTP/1.1" 200 -
+2026-01-12 15:58:26,173 [INFO] Media Retriever gestart
+2026-01-12 15:58:26,175 [ERROR] Config bestand niet gevonden: config\media_config.json
+2026-01-12 15:58:39,776 [INFO] Media Retriever gestart
+2026-01-12 15:58:39,777 [ERROR] Config bestand niet gevonden: .media_config.json
+2026-01-12 15:58:47,788 [INFO] Media Retriever gestart
+2026-01-12 15:58:47,790 [INFO] IMDb afleveringen ophalen: tt2531336
+2026-01-12 15:58:48,248 [INFO] IMDb afleveringen gevonden: 1
+2026-01-12 15:58:48,250 [INFO] === Serie controleren: Lupin ===
+2026-01-12 15:58:48,251 [INFO] Kodi: 0 | IMDb: 1 | Te downloaden: 1
+2026-01-12 15:58:48,253 [INFO] TPB zoeken: Lupin s04e01 2160p HDR
+2026-01-12 15:58:48,876 [INFO] TPB zoeken: Lupin s04e01 2160p
+2026-01-12 15:58:49,583 [INFO] TPB zoeken: Lupin s04e01 h265
+2026-01-12 15:58:50,230 [INFO] TPB zoeken: Lupin s04e01 1080p BluRay
+2026-01-12 15:58:50,830 [INFO] TPB zoeken: Lupin s04e01 1080p WEB-DL
+2026-01-12 15:58:51,470 [INFO] TPB zoeken: Lupin s04e01 1080p
+2026-01-12 15:58:52,100 [INFO] Niet gevonden: Lupin S04E01
+2026-01-12 15:58:52,101 [INFO] IMDb afleveringen ophalen: tt22202452
+2026-01-12 15:58:52,307 [INFO] IMDb afleveringen gevonden: 0
+2026-01-12 15:58:52,308 [INFO] === Serie controleren: Pluribus ===
+2026-01-12 15:58:52,309 [INFO] Kodi: 0 | IMDb: 0 | Te downloaden: 0
+2026-01-12 15:58:52,310 [INFO] IMDb afleveringen ophalen: tt31835154
+2026-01-12 15:58:52,498 [INFO] IMDb afleveringen gevonden: 7
+2026-01-12 15:58:52,499 [INFO] === Serie controleren: Amsterdam Empire ===
+2026-01-12 15:58:52,499 [INFO] Kodi: 0 | IMDb: 7 | Te downloaden: 7
+2026-01-12 15:58:52,500 [INFO] TPB zoeken: Amsterdam Empire s01e07 2160p HDR
+2026-01-12 15:58:54,378 [INFO] TPB zoeken: Amsterdam Empire s01e07 2160p
+2026-01-12 15:58:55,710 [INFO] TPB zoeken: Amsterdam Empire s01e07 h265
+2026-01-12 15:58:57,458 [INFO] TPB zoeken: Amsterdam Empire s01e07 1080p BluRay
+2026-01-12 15:58:58,682 [INFO] TPB zoeken: Amsterdam Empire s01e07 1080p WEB-DL
+2026-01-12 15:59:00,159 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:45757B819CA39578376F5DF5DB588D2CA07BC77B&dn=Amsterdam%20Empire%20S01E07%20Fire%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20H%20264-playWEB
+2026-01-12 15:59:00,169 [INFO] TPB zoeken: Amsterdam Empire s01e02 2160p HDR
+2026-01-12 15:59:01,538 [INFO] TPB zoeken: Amsterdam Empire s01e02 2160p
+2026-01-12 15:59:03,700 [INFO] TPB zoeken: Amsterdam Empire s01e02 h265
+2026-01-12 15:59:04,957 [INFO] TPB zoeken: Amsterdam Empire s01e02 1080p BluRay
+2026-01-12 15:59:06,153 [INFO] TPB zoeken: Amsterdam Empire s01e02 1080p WEB-DL
+2026-01-12 15:59:07,814 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:B28D2293E96FD2CDB7D1AB0700E253DDA7DAF325&dn=Amsterdam%20Empire%20S01E02%20Carpe%20Vitam%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20H%20264-play
+2026-01-12 15:59:07,824 [INFO] TPB zoeken: Amsterdam Empire s01e05 2160p HDR
+2026-01-12 15:59:10,132 [INFO] TPB zoeken: Amsterdam Empire s01e05 2160p
+2026-01-12 15:59:11,311 [INFO] TPB zoeken: Amsterdam Empire s01e05 h265
+2026-01-12 15:59:12,552 [INFO] TPB zoeken: Amsterdam Empire s01e05 1080p BluRay
+2026-01-12 15:59:14,108 [INFO] TPB zoeken: Amsterdam Empire s01e05 1080p WEB-DL
+2026-01-12 15:59:15,981 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:6F87CCCAA2056713F23EEE5B7BA5CDFB2743A82C&dn=Amsterdam%20Empire%20S01E05%20Til%20Death%20Do%20Us%20Part%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20H
+2026-01-12 15:59:15,989 [INFO] TPB zoeken: Amsterdam Empire s01e06 2160p HDR
+2026-01-12 15:59:16,598 [INFO] TPB zoeken: Amsterdam Empire s01e06 2160p
+2026-01-12 15:59:17,273 [INFO] TPB zoeken: Amsterdam Empire s01e06 h265
+2026-01-12 15:59:17,902 [INFO] TPB zoeken: Amsterdam Empire s01e06 1080p BluRay
+2026-01-12 15:59:18,514 [INFO] TPB zoeken: Amsterdam Empire s01e06 1080p WEB-DL
+2026-01-12 15:59:19,612 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:606B2C9B35D25EFE47596256E5BD6E74B6E62FDD&dn=Amsterdam%20Empire%20S01E06%20Daddy%20Issues%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20H%20264-pla
+2026-01-12 15:59:19,620 [INFO] TPB zoeken: Amsterdam Empire s01e01 2160p HDR
+2026-01-12 15:59:20,882 [INFO] TPB zoeken: Amsterdam Empire s01e01 2160p
+2026-01-12 15:59:22,133 [INFO] TPB zoeken: Amsterdam Empire s01e01 h265
+2026-01-12 15:59:23,772 [INFO] TPB zoeken: Amsterdam Empire s01e01 1080p BluRay
+2026-01-12 15:59:26,237 [INFO] TPB zoeken: Amsterdam Empire s01e01 1080p WEB-DL
+2026-01-12 15:59:28,473 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:93674CE920C9F23EDAA53A77B92ECD930AB34EF0&dn=Amsterdam%20Empire%20S01E01%20Whole%20Lotta%20Love%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20H%20264
+2026-01-12 15:59:28,480 [INFO] TPB zoeken: Amsterdam Empire s01e03 2160p HDR
+2026-01-12 15:59:30,021 [INFO] TPB zoeken: Amsterdam Empire s01e03 2160p
+2026-01-12 15:59:31,291 [INFO] TPB zoeken: Amsterdam Empire s01e03 h265
+2026-01-12 15:59:32,471 [INFO] TPB zoeken: Amsterdam Empire s01e03 1080p BluRay
+2026-01-12 15:59:33,819 [INFO] TPB zoeken: Amsterdam Empire s01e03 1080p WEB-DL
+2026-01-12 15:59:35,768 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:0C38E7D3C10DA10A1BFAF475426DAADF164019CC&dn=Amsterdam%20Empire%20S01E03%20Forever%20Pour%20Toujours%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20
+2026-01-12 15:59:35,774 [INFO] TPB zoeken: Amsterdam Empire s01e04 2160p HDR
+2026-01-12 15:59:36,984 [INFO] TPB zoeken: Amsterdam Empire s01e04 2160p
+2026-01-12 15:59:39,159 [INFO] TPB zoeken: Amsterdam Empire s01e04 h265
+2026-01-12 15:59:40,369 [INFO] TPB zoeken: Amsterdam Empire s01e04 1080p BluRay
+2026-01-12 15:59:41,598 [INFO] TPB zoeken: Amsterdam Empire s01e04 1080p WEB-DL
+2026-01-12 15:59:43,331 [INFO] TPB zoeken: Amsterdam Empire s01e04 1080p
+2026-01-12 15:59:45,221 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:44C83AA3B8C3340D9204CC96BD4C8C68C8E67F2B&dn=Amsterdam%20Empire%20S01E04%201080p%20WEB%20h264-EDITH
+2026-01-12 15:59:45,229 [INFO] IMDb afleveringen ophalen: tt28466970
+2026-01-12 15:59:45,427 [INFO] IMDb afleveringen gevonden: 1
+2026-01-12 15:59:45,428 [INFO] === Serie controleren: Ferry ===
+2026-01-12 15:59:45,428 [INFO] Kodi: 0 | IMDb: 1 | Te downloaden: 1
+2026-01-12 15:59:45,431 [INFO] TPB zoeken: Ferry s02e01 2160p HDR
+2026-01-12 15:59:46,071 [INFO] TPB zoeken: Ferry s02e01 2160p
+2026-01-12 15:59:46,667 [INFO] TPB zoeken: Ferry s02e01 h265
+2026-01-12 15:59:47,327 [INFO] TPB zoeken: Ferry s02e01 1080p BluRay
+2026-01-12 15:59:47,923 [INFO] TPB zoeken: Ferry s02e01 1080p WEB-DL
+2026-01-12 15:59:48,563 [INFO] TPB zoeken: Ferry s02e01 1080p
+2026-01-12 15:59:49,268 [INFO] Niet gevonden: Ferry S02E01
+2026-01-12 15:59:49,269 [INFO] === Film controleren: titanic ===
+2026-01-12 15:59:49,270 [INFO] TPB zoeken: titanic 2160p HDR
+2026-01-12 15:59:50,800 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:12C9E898CDE4EB711D2D0A47E9A61D50100171F9&dn=Titanic.1997.MULTi.UHD.2160p.Bluray.x265.HDR.DTS-HDMA.5.1-DTOne
+2026-01-12 16:01:49,236 [INFO] Media Retriever gestart
+2026-01-12 16:01:49,238 [INFO] IMDb afleveringen ophalen: tt2531336
+2026-01-12 16:01:49,673 [INFO] IMDb afleveringen gevonden: 1
+2026-01-12 16:01:49,674 [INFO] === Serie controleren: Lupin ===
+2026-01-12 16:01:49,676 [INFO] Kodi: 0 | IMDb: 1 | Te downloaden: 1
+2026-01-12 16:01:49,676 [INFO] TPB zoeken: Lupin s04e01 2160p HDR
+2026-01-12 16:01:50,329 [INFO] TPB zoeken: Lupin s04e01 2160p
+2026-01-12 16:01:50,982 [INFO] TPB zoeken: Lupin s04e01 h265
+2026-01-12 16:01:51,609 [INFO] TPB zoeken: Lupin s04e01 1080p BluRay
+2026-01-12 16:01:52,250 [INFO] TPB zoeken: Lupin s04e01 1080p WEB-DL
+2026-01-12 16:01:52,877 [INFO] TPB zoeken: Lupin s04e01 1080p
+2026-01-12 16:01:53,530 [INFO] Niet gevonden: Lupin S04E01
+2026-01-12 16:01:53,532 [INFO] IMDb afleveringen ophalen: tt22202452
+2026-01-12 16:01:53,781 [INFO] IMDb afleveringen gevonden: 0
+2026-01-12 16:01:53,782 [INFO] === Serie controleren: Pluribus ===
+2026-01-12 16:01:53,783 [INFO] Kodi: 0 | IMDb: 0 | Te downloaden: 0
+2026-01-12 16:01:53,784 [INFO] IMDb afleveringen ophalen: tt31835154
+2026-01-12 16:01:54,024 [INFO] IMDb afleveringen gevonden: 7
+2026-01-12 16:01:54,025 [INFO] === Serie controleren: Amsterdam Empire ===
+2026-01-12 16:01:54,025 [INFO] Kodi: 0 | IMDb: 7 | Te downloaden: 7
+2026-01-12 16:01:54,026 [INFO] TPB zoeken: Amsterdam Empire s01e07 2160p HDR
+2026-01-12 16:01:54,643 [INFO] TPB zoeken: Amsterdam Empire s01e07 2160p
+2026-01-12 16:01:55,299 [INFO] TPB zoeken: Amsterdam Empire s01e07 h265
+2026-01-12 16:01:55,970 [INFO] TPB zoeken: Amsterdam Empire s01e07 1080p BluRay
+2026-01-12 16:01:56,626 [INFO] TPB zoeken: Amsterdam Empire s01e07 1080p WEB-DL
+2026-01-12 16:01:57,584 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:45757B819CA39578376F5DF5DB588D2CA07BC77B&dn=Amsterdam%20Empire%20S01E07%20Fire%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20H%20264-playWEB
+2026-01-12 16:01:57,597 [INFO] TPB zoeken: Amsterdam Empire s01e02 2160p HDR
+2026-01-12 16:01:58,226 [INFO] TPB zoeken: Amsterdam Empire s01e02 2160p
+2026-01-12 16:01:58,892 [INFO] TPB zoeken: Amsterdam Empire s01e02 h265
+2026-01-12 16:01:59,530 [INFO] TPB zoeken: Amsterdam Empire s01e02 1080p BluRay
+2026-01-12 16:02:00,155 [INFO] TPB zoeken: Amsterdam Empire s01e02 1080p WEB-DL
+2026-01-12 16:02:01,020 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:B28D2293E96FD2CDB7D1AB0700E253DDA7DAF325&dn=Amsterdam%20Empire%20S01E02%20Carpe%20Vitam%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20H%20264-play
+2026-01-12 16:02:01,028 [INFO] TPB zoeken: Amsterdam Empire s01e05 2160p HDR
+2026-01-12 16:02:01,628 [INFO] TPB zoeken: Amsterdam Empire s01e05 2160p
+2026-01-12 16:02:02,252 [INFO] TPB zoeken: Amsterdam Empire s01e05 h265
+2026-01-12 16:02:02,880 [INFO] TPB zoeken: Amsterdam Empire s01e05 1080p BluRay
+2026-01-12 16:02:03,516 [INFO] TPB zoeken: Amsterdam Empire s01e05 1080p WEB-DL
+2026-01-12 16:02:04,321 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:6F87CCCAA2056713F23EEE5B7BA5CDFB2743A82C&dn=Amsterdam%20Empire%20S01E05%20Til%20Death%20Do%20Us%20Part%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20H
+2026-01-12 16:02:04,329 [INFO] TPB zoeken: Amsterdam Empire s01e06 2160p HDR
+2026-01-12 16:02:04,959 [INFO] TPB zoeken: Amsterdam Empire s01e06 2160p
+2026-01-12 16:02:05,596 [INFO] TPB zoeken: Amsterdam Empire s01e06 h265
+2026-01-12 16:02:06,248 [INFO] TPB zoeken: Amsterdam Empire s01e06 1080p BluRay
+2026-01-12 16:02:06,921 [INFO] TPB zoeken: Amsterdam Empire s01e06 1080p WEB-DL
+2026-01-12 16:02:07,760 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:606B2C9B35D25EFE47596256E5BD6E74B6E62FDD&dn=Amsterdam%20Empire%20S01E06%20Daddy%20Issues%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20H%20264-pla
+2026-01-12 16:02:07,768 [INFO] TPB zoeken: Amsterdam Empire s01e01 2160p HDR
+2026-01-12 16:02:08,386 [INFO] TPB zoeken: Amsterdam Empire s01e01 2160p
+2026-01-12 16:02:09,009 [INFO] TPB zoeken: Amsterdam Empire s01e01 h265
+2026-01-12 16:02:09,651 [INFO] TPB zoeken: Amsterdam Empire s01e01 1080p BluRay
+2026-01-12 16:02:10,307 [INFO] TPB zoeken: Amsterdam Empire s01e01 1080p WEB-DL
+2026-01-12 16:02:11,251 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:93674CE920C9F23EDAA53A77B92ECD930AB34EF0&dn=Amsterdam%20Empire%20S01E01%20Whole%20Lotta%20Love%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20H%20264
+2026-01-12 16:02:11,262 [INFO] TPB zoeken: Amsterdam Empire s01e03 2160p HDR
+2026-01-12 16:02:11,885 [INFO] TPB zoeken: Amsterdam Empire s01e03 2160p
+2026-01-12 16:02:12,542 [INFO] TPB zoeken: Amsterdam Empire s01e03 h265
+2026-01-12 16:02:13,184 [INFO] TPB zoeken: Amsterdam Empire s01e03 1080p BluRay
+2026-01-12 16:02:13,841 [INFO] TPB zoeken: Amsterdam Empire s01e03 1080p WEB-DL
+2026-01-12 16:02:14,712 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:0C38E7D3C10DA10A1BFAF475426DAADF164019CC&dn=Amsterdam%20Empire%20S01E03%20Forever%20Pour%20Toujours%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20
+2026-01-12 16:02:14,719 [INFO] TPB zoeken: Amsterdam Empire s01e04 2160p HDR
+2026-01-12 16:02:15,337 [INFO] TPB zoeken: Amsterdam Empire s01e04 2160p
+2026-01-12 16:02:15,962 [INFO] TPB zoeken: Amsterdam Empire s01e04 h265
+2026-01-12 16:02:16,602 [INFO] TPB zoeken: Amsterdam Empire s01e04 1080p BluRay
+2026-01-12 16:02:17,242 [INFO] TPB zoeken: Amsterdam Empire s01e04 1080p WEB-DL
+2026-01-12 16:02:17,870 [INFO] TPB zoeken: Amsterdam Empire s01e04 1080p
+2026-01-12 16:02:18,773 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:44C83AA3B8C3340D9204CC96BD4C8C68C8E67F2B&dn=Amsterdam%20Empire%20S01E04%201080p%20WEB%20h264-EDITH
+2026-01-12 16:02:18,784 [INFO] IMDb afleveringen ophalen: tt28466970
+2026-01-12 16:02:18,983 [INFO] IMDb afleveringen gevonden: 1
+2026-01-12 16:02:18,984 [INFO] === Serie controleren: Ferry ===
+2026-01-12 16:02:18,984 [INFO] Kodi: 0 | IMDb: 1 | Te downloaden: 1
+2026-01-12 16:02:18,985 [INFO] TPB zoeken: Ferry s02e01 2160p HDR
+2026-01-12 16:02:19,589 [INFO] TPB zoeken: Ferry s02e01 2160p
+2026-01-12 16:02:20,190 [INFO] TPB zoeken: Ferry s02e01 h265
+2026-01-12 16:02:20,835 [INFO] TPB zoeken: Ferry s02e01 1080p BluRay
+2026-01-12 16:02:21,488 [INFO] TPB zoeken: Ferry s02e01 1080p WEB-DL
+2026-01-12 16:02:59,043 [INFO] Media Retriever gestart
+2026-01-12 16:02:59,045 [INFO] IMDb afleveringen ophalen: tt2531336
+2026-01-12 16:02:59,519 [INFO] IMDb afleveringen gevonden: 1
+2026-01-12 16:02:59,520 [INFO] === Serie controleren: Lupin ===
+2026-01-12 16:02:59,520 [INFO] Kodi: 0 | IMDb: 1 | Te downloaden: 1
+2026-01-12 16:02:59,521 [INFO] TPB zoeken: Lupin s04e01 2160p HDR
+2026-01-12 16:03:00,137 [INFO] TPB zoeken: Lupin s04e01 2160p
+2026-01-12 16:03:00,763 [INFO] TPB zoeken: Lupin s04e01 h265
+2026-01-12 16:03:01,401 [INFO] TPB zoeken: Lupin s04e01 1080p BluRay
+2026-01-12 16:03:02,028 [INFO] TPB zoeken: Lupin s04e01 1080p WEB-DL
+2026-01-12 16:03:02,641 [INFO] TPB zoeken: Lupin s04e01 1080p
+2026-01-12 16:03:03,272 [INFO] Niet gevonden: Lupin S04E01
+2026-01-12 16:03:03,273 [INFO] IMDb afleveringen ophalen: tt22202452
+2026-01-12 16:03:03,497 [INFO] IMDb afleveringen gevonden: 0
+2026-01-12 16:03:03,498 [INFO] === Serie controleren: Pluribus ===
+2026-01-12 16:03:03,499 [INFO] Kodi: 0 | IMDb: 0 | Te downloaden: 0
+2026-01-12 16:03:03,500 [INFO] IMDb afleveringen ophalen: tt31835154
+2026-01-12 16:03:03,699 [INFO] IMDb afleveringen gevonden: 7
+2026-01-12 16:03:03,700 [INFO] === Serie controleren: Amsterdam Empire ===
+2026-01-12 16:03:03,701 [INFO] Kodi: 0 | IMDb: 7 | Te downloaden: 7
+2026-01-12 16:03:03,702 [INFO] TPB zoeken: Amsterdam Empire s01e07 2160p HDR
+2026-01-12 16:03:04,317 [INFO] TPB zoeken: Amsterdam Empire s01e07 2160p
+2026-01-12 16:03:04,934 [INFO] TPB zoeken: Amsterdam Empire s01e07 h265
+2026-01-12 16:03:05,549 [INFO] TPB zoeken: Amsterdam Empire s01e07 1080p BluRay
+2026-01-12 16:03:06,179 [INFO] TPB zoeken: Amsterdam Empire s01e07 1080p WEB-DL
+2026-01-12 16:03:07,032 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:45757B819CA39578376F5DF5DB588D2CA07BC77B&dn=Amsterdam%20Empire%20S01E07%20Fire%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20H%20264-playWEB
+2026-01-12 16:03:07,044 [INFO] TPB zoeken: Amsterdam Empire s01e02 2160p HDR
+2026-01-12 16:03:07,658 [INFO] TPB zoeken: Amsterdam Empire s01e02 2160p
+2026-01-12 16:03:08,270 [INFO] TPB zoeken: Amsterdam Empire s01e02 h265
+2026-01-12 16:03:08,909 [INFO] TPB zoeken: Amsterdam Empire s01e02 1080p BluRay
+2026-01-12 16:03:09,520 [INFO] TPB zoeken: Amsterdam Empire s01e02 1080p WEB-DL
+2026-01-12 16:03:10,408 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:B28D2293E96FD2CDB7D1AB0700E253DDA7DAF325&dn=Amsterdam%20Empire%20S01E02%20Carpe%20Vitam%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20H%20264-play
+2026-01-12 16:03:10,416 [INFO] TPB zoeken: Amsterdam Empire s01e05 2160p HDR
+2026-01-12 16:03:11,022 [INFO] TPB zoeken: Amsterdam Empire s01e05 2160p
+2026-01-12 16:03:11,663 [INFO] TPB zoeken: Amsterdam Empire s01e05 h265
+2026-01-12 16:03:12,292 [INFO] TPB zoeken: Amsterdam Empire s01e05 1080p BluRay
+2026-01-12 16:03:12,893 [INFO] TPB zoeken: Amsterdam Empire s01e05 1080p WEB-DL
+2026-01-12 16:03:13,739 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:6F87CCCAA2056713F23EEE5B7BA5CDFB2743A82C&dn=Amsterdam%20Empire%20S01E05%20Til%20Death%20Do%20Us%20Part%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20H
+2026-01-12 16:03:13,746 [INFO] TPB zoeken: Amsterdam Empire s01e06 2160p HDR
+2026-01-12 16:03:14,347 [INFO] TPB zoeken: Amsterdam Empire s01e06 2160p
+2026-01-12 16:03:14,980 [INFO] TPB zoeken: Amsterdam Empire s01e06 h265
+2026-01-12 16:03:15,629 [INFO] TPB zoeken: Amsterdam Empire s01e06 1080p BluRay
+2026-01-12 16:03:16,243 [INFO] TPB zoeken: Amsterdam Empire s01e06 1080p WEB-DL
+2026-01-12 16:03:17,125 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:606B2C9B35D25EFE47596256E5BD6E74B6E62FDD&dn=Amsterdam%20Empire%20S01E06%20Daddy%20Issues%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20H%20264-pla
+2026-01-12 16:03:17,131 [INFO] TPB zoeken: Amsterdam Empire s01e01 2160p HDR
+2026-01-12 16:03:17,746 [INFO] TPB zoeken: Amsterdam Empire s01e01 2160p
+2026-01-12 16:03:18,344 [INFO] TPB zoeken: Amsterdam Empire s01e01 h265
+2026-01-12 16:03:18,970 [INFO] TPB zoeken: Amsterdam Empire s01e01 1080p BluRay
+2026-01-12 16:03:19,598 [INFO] TPB zoeken: Amsterdam Empire s01e01 1080p WEB-DL
+2026-01-12 16:03:20,568 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:93674CE920C9F23EDAA53A77B92ECD930AB34EF0&dn=Amsterdam%20Empire%20S01E01%20Whole%20Lotta%20Love%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20H%20264
+2026-01-12 16:03:20,577 [INFO] TPB zoeken: Amsterdam Empire s01e03 2160p HDR
+2026-01-12 16:03:21,186 [INFO] TPB zoeken: Amsterdam Empire s01e03 2160p
+2026-01-12 16:03:21,825 [INFO] TPB zoeken: Amsterdam Empire s01e03 h265
+2026-01-12 16:03:22,454 [INFO] TPB zoeken: Amsterdam Empire s01e03 1080p BluRay
+2026-01-12 16:03:23,056 [INFO] TPB zoeken: Amsterdam Empire s01e03 1080p WEB-DL
+2026-01-12 16:03:23,984 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:0C38E7D3C10DA10A1BFAF475426DAADF164019CC&dn=Amsterdam%20Empire%20S01E03%20Forever%20Pour%20Toujours%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20
+2026-01-12 16:03:23,991 [INFO] TPB zoeken: Amsterdam Empire s01e04 2160p HDR
+2026-01-12 16:03:24,606 [INFO] TPB zoeken: Amsterdam Empire s01e04 2160p
+2026-01-12 16:03:25,255 [INFO] TPB zoeken: Amsterdam Empire s01e04 h265
+2026-01-12 16:03:25,857 [INFO] TPB zoeken: Amsterdam Empire s01e04 1080p BluRay
+2026-01-12 16:03:26,458 [INFO] TPB zoeken: Amsterdam Empire s01e04 1080p WEB-DL
+2026-01-12 16:03:27,082 [INFO] TPB zoeken: Amsterdam Empire s01e04 1080p
+2026-01-12 16:03:28,009 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:44C83AA3B8C3340D9204CC96BD4C8C68C8E67F2B&dn=Amsterdam%20Empire%20S01E04%201080p%20WEB%20h264-EDITH
+2026-01-12 16:03:28,018 [INFO] IMDb afleveringen ophalen: tt28466970
+2026-01-12 16:03:28,208 [INFO] IMDb afleveringen gevonden: 1
+2026-01-12 16:03:28,209 [INFO] === Serie controleren: Ferry ===
+2026-01-12 16:03:28,209 [INFO] Kodi: 0 | IMDb: 1 | Te downloaden: 1
+2026-01-12 16:03:28,210 [INFO] TPB zoeken: Ferry s02e01 2160p HDR
+2026-01-12 16:03:28,809 [INFO] TPB zoeken: Ferry s02e01 2160p
+2026-01-12 16:03:29,431 [INFO] TPB zoeken: Ferry s02e01 h265
+2026-01-12 16:03:30,044 [INFO] TPB zoeken: Ferry s02e01 1080p BluRay
+2026-01-12 16:03:30,725 [INFO] TPB zoeken: Ferry s02e01 1080p WEB-DL
+2026-01-12 16:03:31,374 [INFO] TPB zoeken: Ferry s02e01 1080p
+2026-01-12 16:03:32,092 [INFO] Niet gevonden: Ferry S02E01
+2026-01-12 16:03:32,093 [INFO] === Film controleren: titanic ===
+2026-01-12 16:03:32,094 [INFO] TPB zoeken: titanic 2160p HDR
+2026-01-12 16:03:33,035 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:12C9E898CDE4EB711D2D0A47E9A61D50100171F9&dn=Titanic.1997.MULTi.UHD.2160p.Bluray.x265.HDR.DTS-HDMA.5.1-DTOne
+2026-01-12 16:07:31,538 [INFO] Media Retriever gestart
+2026-01-12 16:07:31,739 [INFO] package: mysql.connector.plugins
+2026-01-12 16:07:31,740 [INFO] plugin_name: caching_sha2_password
+2026-01-12 16:07:31,741 [INFO] AUTHENTICATION_PLUGIN_CLASS: MySQLCachingSHA2PasswordAuthPlugin
+2026-01-12 16:07:31,762 [INFO] IMDb afleveringen ophalen: tt2531336
+2026-01-12 16:07:32,198 [INFO] IMDb afleveringen gevonden: 1
+2026-01-12 16:07:32,199 [INFO] === Serie controleren: Lupin ===
+2026-01-12 16:07:32,201 [INFO] Kodi: 0 | IMDb: 1 | Te downloaden: 1
+2026-01-12 16:07:32,201 [INFO] TPB zoeken: Lupin s04e01 2160p HDR
+2026-01-12 16:07:32,840 [INFO] TPB zoeken: Lupin s04e01 2160p
+2026-01-12 16:07:33,454 [INFO] TPB zoeken: Lupin s04e01 h265
+2026-01-12 16:07:34,069 [INFO] TPB zoeken: Lupin s04e01 1080p BluRay
+2026-01-12 16:07:34,699 [INFO] TPB zoeken: Lupin s04e01 1080p WEB-DL
+2026-01-12 16:07:35,324 [INFO] TPB zoeken: Lupin s04e01 1080p
+2026-01-12 16:07:35,925 [INFO] Niet gevonden: Lupin S04E01
+2026-01-12 16:07:36,221 [INFO] IMDb afleveringen ophalen: tt22202452
+2026-01-12 16:07:36,410 [INFO] IMDb afleveringen gevonden: 0
+2026-01-12 16:07:36,411 [INFO] === Serie controleren: Pluribus ===
+2026-01-12 16:07:36,411 [INFO] Kodi: 9 | IMDb: 0 | Te downloaden: 0
+2026-01-12 16:07:36,697 [INFO] IMDb afleveringen ophalen: tt31835154
+2026-01-12 16:07:36,879 [INFO] IMDb afleveringen gevonden: 7
+2026-01-12 16:07:36,880 [INFO] === Serie controleren: Amsterdam Empire ===
+2026-01-12 16:07:36,882 [INFO] Kodi: 6 | IMDb: 7 | Te downloaden: 1
+2026-01-12 16:07:36,883 [INFO] TPB zoeken: Amsterdam Empire s01e06 2160p HDR
+2026-01-12 16:07:37,502 [INFO] TPB zoeken: Amsterdam Empire s01e06 2160p
+2026-01-12 16:07:38,102 [INFO] TPB zoeken: Amsterdam Empire s01e06 h265
+2026-01-12 16:07:38,749 [INFO] TPB zoeken: Amsterdam Empire s01e06 1080p BluRay
+2026-01-12 16:07:39,345 [INFO] TPB zoeken: Amsterdam Empire s01e06 1080p WEB-DL
+2026-01-12 16:07:40,336 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:606B2C9B35D25EFE47596256E5BD6E74B6E62FDD&dn=Amsterdam%20Empire%20S01E06%20Daddy%20Issues%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20H%20264-pla
+2026-01-12 16:07:40,540 [INFO] IMDb afleveringen ophalen: tt28466970
+2026-01-12 16:07:40,716 [INFO] IMDb afleveringen gevonden: 1
+2026-01-12 16:07:40,717 [INFO] === Serie controleren: Ferry ===
+2026-01-12 16:07:40,718 [INFO] Kodi: 0 | IMDb: 1 | Te downloaden: 1
+2026-01-12 16:07:40,719 [INFO] TPB zoeken: Ferry s02e01 2160p HDR
+2026-01-12 16:07:41,346 [INFO] TPB zoeken: Ferry s02e01 2160p
+2026-01-12 16:07:41,956 [INFO] TPB zoeken: Ferry s02e01 h265
+2026-01-12 16:07:42,586 [INFO] TPB zoeken: Ferry s02e01 1080p BluRay
+2026-01-12 16:07:43,213 [INFO] TPB zoeken: Ferry s02e01 1080p WEB-DL
+2026-01-12 16:07:43,825 [INFO] TPB zoeken: Ferry s02e01 1080p
+2026-01-12 16:07:44,422 [INFO] Niet gevonden: Ferry S02E01
+2026-01-12 16:07:44,423 [INFO] === Film controleren: titanic ===
+2026-01-12 16:07:44,425 [INFO] TPB zoeken: titanic 2160p HDR
+2026-01-12 16:07:45,581 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:12C9E898CDE4EB711D2D0A47E9A61D50100171F9&dn=Titanic.1997.MULTi.UHD.2160p.Bluray.x265.HDR.DTS-HDMA.5.1-DTOne
+2026-01-12 16:08:35,247 [INFO] Media Retriever gestart
+2026-01-12 16:08:35,469 [INFO] package: mysql.connector.plugins
+2026-01-12 16:08:35,470 [INFO] plugin_name: caching_sha2_password
+2026-01-12 16:08:35,471 [INFO] AUTHENTICATION_PLUGIN_CLASS: MySQLCachingSHA2PasswordAuthPlugin
+2026-01-12 16:08:35,499 [INFO] IMDb afleveringen ophalen: tt2531336
+2026-01-12 16:08:35,928 [INFO] IMDb afleveringen gevonden: 1
+2026-01-12 16:08:35,929 [INFO] === Serie controleren: Lupin ===
+2026-01-12 16:08:35,930 [INFO] Kodi: 0 | IMDb: 1 | Te downloaden: 1
+2026-01-12 16:08:35,931 [INFO] TPB zoeken: Lupin s04e01 2160p HDR
+2026-01-12 16:08:36,570 [INFO] TPB zoeken: Lupin s04e01 2160p
+2026-01-12 16:08:37,152 [INFO] TPB zoeken: Lupin s04e01 h265
+2026-01-12 16:08:37,781 [INFO] TPB zoeken: Lupin s04e01 1080p BluRay
+2026-01-12 16:08:38,394 [INFO] TPB zoeken: Lupin s04e01 1080p WEB-DL
+2026-01-12 16:08:39,027 [INFO] TPB zoeken: Lupin s04e01 1080p
+2026-01-12 16:08:39,626 [INFO] Niet gevonden: Lupin S04E01
+2026-01-12 16:08:39,960 [INFO] IMDb afleveringen ophalen: tt22202452
+2026-01-12 16:08:40,165 [INFO] IMDb afleveringen gevonden: 0
+2026-01-12 16:08:40,166 [INFO] === Serie controleren: Pluribus ===
+2026-01-12 16:08:40,167 [INFO] Kodi: 9 | IMDb: 0 | Te downloaden: 0
+2026-01-12 16:08:40,602 [INFO] IMDb afleveringen ophalen: tt31835154
+2026-01-12 16:08:40,821 [INFO] IMDb afleveringen gevonden: 7
+2026-01-12 16:08:40,822 [INFO] === Serie controleren: Amsterdam Empire ===
+2026-01-12 16:08:40,823 [INFO] Kodi: 6 | IMDb: 7 | Te downloaden: 1
+2026-01-12 16:08:40,823 [INFO] TPB zoeken: Amsterdam Empire s01e06 2160p HDR
+2026-01-12 16:08:41,446 [INFO] TPB zoeken: Amsterdam Empire s01e06 2160p
+2026-01-12 16:08:42,030 [INFO] TPB zoeken: Amsterdam Empire s01e06 h265
+2026-01-12 16:08:42,659 [INFO] TPB zoeken: Amsterdam Empire s01e06 1080p BluRay
+2026-01-12 16:08:43,282 [INFO] TPB zoeken: Amsterdam Empire s01e06 1080p WEB-DL
+2026-01-12 16:08:44,341 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:606B2C9B35D25EFE47596256E5BD6E74B6E62FDD&dn=Amsterdam%20Empire%20S01E06%20Daddy%20Issues%201080p%20NF%20WEB-DL%20DD%205%201%20Atmos%20H%20264-pla
+2026-01-12 16:08:44,520 [INFO] IMDb afleveringen ophalen: tt28466970
+2026-01-12 16:08:44,696 [INFO] IMDb afleveringen gevonden: 1
+2026-01-12 16:08:44,697 [INFO] === Serie controleren: Ferry ===
+2026-01-12 16:08:44,697 [INFO] Kodi: 0 | IMDb: 1 | Te downloaden: 1
+2026-01-12 16:08:44,698 [INFO] TPB zoeken: Ferry s02e01 2160p HDR
+2026-01-12 16:08:45,300 [INFO] TPB zoeken: Ferry s02e01 2160p
+2026-01-12 16:08:45,958 [INFO] TPB zoeken: Ferry s02e01 h265
+2026-01-12 16:08:46,574 [INFO] TPB zoeken: Ferry s02e01 1080p BluRay
+2026-01-12 16:08:47,174 [INFO] TPB zoeken: Ferry s02e01 1080p WEB-DL
+2026-01-12 16:08:47,789 [INFO] TPB zoeken: Ferry s02e01 1080p
+2026-01-12 16:08:48,411 [INFO] Niet gevonden: Ferry S02E01
+2026-01-12 16:08:48,411 [INFO] === Film controleren: titanic ===
+2026-01-12 16:08:48,413 [INFO] TPB zoeken: titanic 2160p HDR
+2026-01-12 16:08:49,364 [INFO] Magnet toegevoegd: magnet:?xt=urn:btih:12C9E898CDE4EB711D2D0A47E9A61D50100171F9&dn=Titanic.1997.MULTi.UHD.2160p.Bluray.x265.HDR.DTS-HDMA.5.1-DTOne

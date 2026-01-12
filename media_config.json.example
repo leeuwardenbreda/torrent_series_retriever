@@ -1,0 +1,30 @@
+{
+  "series": [
+    {
+      "imdb_id": "tt2531336",
+      "title": "Lupin",
+      "seasons": [1,2,3,4] 
+    },
+    {
+      "imdb_id": "tt22202452",
+      "title": "Pluribus",
+      "seasons": [2] 
+    },
+    {
+      "imdb_id": "tt31835154",
+      "title": "Amsterdam Empire",
+      "seasons": [] # all seasons
+    }, 
+    {
+      "imdb_id": "tt28466970",
+      "title": "Ferry",
+      "seasons": [2]
+    }],
+    "films": [
+    {
+      "imdb_id": "tt0120338",
+      "title": "titanic"
+    },
+
+  ]
+}
