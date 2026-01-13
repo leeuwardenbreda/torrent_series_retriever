@@ -188,9 +188,125 @@ def process_series(entry):
     logging.info("Kodi afleveringen: %d | IMDb afleveringen: %d | Te downloaden: %d",
                  len(kodi_eps), len(imdb_eps), len(todo))
 
-    qualities = ["2160p HDR", "2160p", "h265", "1080p BluRay", "1080p WEB-DL", "1080p"]
+    qualities = [
+        "2160p 10bit HDR Atmos DTS-X 7.1 H265",
+        "2160p 10bit HDR Atmos DTS-HD 7.1 H265",
+        "2160p 10bit HDR Atmos TrueHD 7.1 H265",
+        "2160p 10bit HDR Atmos DDP 5.1 H265",
+        "2160p 10bit HDR DTS-X 7.1 H265",
+        "2160p 10bit HDR DTS-HD 7.1 H265",
+        "2160p 10bit HDR DTS 5.1 H265",
+        "2160p HDR Atmos DTS-X 7.1 H265",
+        "2160p HDR Atmos DTS-HD 7.1 H265",
+        "2160p HDR Atmos DTS 5.1 H265",
+        "2160p HDR DTS-X 7.1 H265",
+        "2160p HDR DTS-HD 7.1 H265",
+        "2160p HDR DTS 5.1 H265",
+        "2160p 10bit DTS-X 7.1 H265",
+        "2160p 10bit DTS-HD 7.1 H265",
+        "2160p Atmos DTS 5.1 H265",
+        "2160p Atmos 7.1 H265",
+        "2160p Atmos 5.1 H265",
+        "2160p 7.1 DTS-X H265",
+        "2160p 7 1 DTS-HD H265",
+        "2160p 5.1 DTS H265",
+        "2160p 5 1 DTS H265",
+        "2160p H265",
+        "2160p HEVC",
+        "2160p UHD BluRay",
+        "2160p UHD WEB-DL",
+        "2160p WEB-DL H265",
+        "2160p WEB-DL",
+        "2160p BluRay",
+        "2160p UHD",
+        "2160p",
+
+        "1080p 10bit HDR Atmos DTS-X 7.1 H265",
+        "1080p 10bit HDR Atmos DTS-HD 7.1 H265",
+        "1080p 10bit HDR DTS-X 7.1 H265",
+        "1080p 10bit HDR DTS-HD 7.1 H265",
+        "1080p HDR Atmos DTS 5.1 H265",
+        "1080p HDR DTS-X 7.1 H265",
+        "1080p HDR DTS-HD 7.1 H265",
+        "1080p HDR DTS 5.1 H265",
+        "1080p Atmos DTS-X 7.1 H265",
+        "1080p Atmos DTS-HD 7.1",
+        "1080p Atmos DTS 5.1",
+        "1080p 7.1 DTS-X",
+        "1080p 7 1 DTS-HD",
+        "1080p 5.1 DTS",
+        "1080p 5 1 DTS",
+        "1080p H265",
+        "1080p HEVC",
+        "1080p BluRay DTS",
+        "1080p BluRay",
+        "1080p WEB-DL H265",
+        "1080p WEB-DL",
+        "1080p WEBRip",
+        "1080p HDTV",
+        "1080p Proper",
+        "1080p Repack",
+
+        "720p DTS 5.1",
+        "720p 5.1 DTS",
+        "720p H265",
+        "720p BluRay",
+        "720p WEB-DL",
+        "720p WEBRip",
+        "720p HDTV",
+        "720p Proper",
+        "720p Repack",
+        "720p",
+
+        "576p",
+        "480p",
+        "SD",
+
+        "BluRay",
+        "WEB-DL",
+        "WEBRip",
+        "HDTV",
+
+        "DTS-X",
+        "DTS-HD",
+        "DTS",
+        "DTX",
+        "Atmos",
+        "TrueHD",
+        "DDP",
+
+        "H265",
+        "H264",
+        "HEVC",
+        "X265",
+        "X264",
+
+        "FullHD",
+        "FHD",
+        "1080p",
+        "HD",
+
+        "SDTV",
+        "Low Quality",
+        "Unknown",
+        "Any",
+        ""
+    ]
     for season, episode in todo:
         found = False
+
+        # === Stap 1: eerst zoeken zonder quality ===
+        base_query = f"{title} s{season:02}e{episode:02}"
+        base_results = search_tpb(base_query)
+
+        if not (
+            base_results
+            and re.search(r"S\d{2}E\d{2}", base_results[0].get("name", ""), re.I)
+        ):
+            logging.info("Niet gevonden (geen geldige basisresultaten): %s S%02dE%02d", title, season, episode)
+            continue  # stoppen als er geen geldige SxxExx match is
+
+        # === Stap 2: basisresultaat gevonden → qualities aflopen zoals voorheen ===
         for q in qualities:
             query = f"{title} s{season:02}e{episode:02} {q}"
             for r in search_tpb(query):
@@ -203,8 +319,10 @@ def process_series(entry):
                     break
             if found:
                 break
+
         if not found:
-            logging.info("Niet gevonden: %s S%02dE%02d", title, season, episode)
+            logging.info("Niet gevonden met qualities: %s S%02dE%02d", title, season, episode)
+
 
 
 def process_film(entry):

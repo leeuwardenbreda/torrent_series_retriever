@@ -2,4 +2,3 @@ dotenv
 mysql-connector-python
 requests
 apscheduler
-smbprotocol

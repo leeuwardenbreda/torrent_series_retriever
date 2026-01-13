@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Media Config GUI</title>
+<style>
+body { font-family: sans-serif; margin: 2em; }
+button { margin: 0.2em; }
+textarea { width: 100%; height: 300px; margin-top: 1em; }
+</style>
+</head>
+<body>
+<h1>Media Config</h1>
+<div id="content"></div>
+<button onclick="viewJSON()">View Full JSON</button>
+<textarea id="jsonView" readonly></textarea>
+<script>
+const apiBase = "/config";
+
+async function loadConfig() {
+    const res = await fetch(apiBase);
+    const data = await res.json();
+    const content = document.getElementById("content");
+    content.innerHTML = "";
+
+    // Series
+    content.innerHTML += "<h2>Series</h2>";
+    data.series.forEach((s,i) => {
+        content.innerHTML += `<div>${s.title} (Seasons: ${s.seasons || "all"}) 
+        <button onclick="deleteSeries(${i})">Delete</button></div>`;
+    });
+    content.innerHTML += `<button onclick="addSeries()">Add Series</button>`;
+
+    // Films
+    content.innerHTML += "<h2>Films</h2>";
+    data.films.forEach((f,i) => {
+        content.innerHTML += `<div>${f.title} (${f.year || ""}) 
+        <button onclick="deleteFilm(${i})">Delete</button></div>`;
+    });
+    content.innerHTML += `<button onclick="addFilm()">Add Film</button>`;
+}
+
+async function deleteSeries(i) {
+    await fetch(`${apiBase}/series/${i}`, {method:"DELETE"});
+    loadConfig();
+}
+async function deleteFilm(i) {
+    await fetch(`${apiBase}/films/${i}`, {method:"DELETE"});
+    loadConfig();
+}
+
+async function addSeries() {
+    const title = prompt("Series title?");
+    const imdb = prompt("IMDb ID?");
+    const seasons = prompt("Seasons (comma separated, leave empty for all)?","");
+    await fetch(`${apiBase}/series`, {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({title, imdb_id: imdb, seasons: seasons.split(",").filter(s=>s)})
+    });
+    loadConfig();
+}
+
+async function addFilm() {
+    const title = prompt("Film title?");
+    const year = prompt("Year?");
+    const imdb = prompt("IMDb ID?");
+    await fetch(`${apiBase}/films`, {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({title, year, imdb_id: imdb})
+    });
+    loadConfig();
+}
+
+async function viewJSON() {
+    const res = await fetch(apiBase);
+    const data = await res.json();
+    document.getElementById("jsonView").value = JSON.stringify(data, null, 2);
+}
+
+loadConfig();
+</script>
+</body>
+</html>

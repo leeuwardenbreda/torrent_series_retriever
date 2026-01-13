@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  media-retriever:
+    build:
+      context: ./processor
+      dockerfile: Dockerfile
+    container_name: media-retriever
+    env_file:
+      - ./processor/.env
+    volumes:
+      - ./processor:/app
+      - ./media_config.json:/app/media_config.json
+      - ./downloads/series:/media/series
+      - ./downloads/movies:/media/movies
+      - ./logs:/app/logs
+    restart: unless-stopped
+
+  media-config-gui:
+    build:
+      context: ./gui
+      dockerfile: Dockerfile
+    container_name: media-config-gui
+    env_file:
+      - ./gui/.env
+    ports:
+      - "8083:8083"
+    volumes:
+      - ./media_config.json:/app/media_config.json
+    restart: unless-stopped
