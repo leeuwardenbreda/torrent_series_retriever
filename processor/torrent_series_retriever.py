@@ -60,6 +60,7 @@ SOURCE_QUALITIES = [
 
 def build_media_qualities():
     combos = []
+
     for v in VIDEO_QUALITIES:
         for a in AUDIO_QUALITIES:
             for c in CODEC_QUALITIES:
@@ -68,8 +69,9 @@ def build_media_qualities():
         for c in CODEC_QUALITIES:
             combos.append(f"{v} {c}")
         combos.append(v)
+
     combos.extend(SOURCE_QUALITIES)
-    combos.append("")
+    combos.append("")  # absolute fallback
     return combos
 
 MEDIA_QUALITIES = build_media_qualities()
@@ -78,12 +80,12 @@ MEDIA_QUALITIES = build_media_qualities()
 def pick_best_by_quality(candidates, qualities):
     for q in qualities:
         q_regex = "".join(f"(?=.*{re.escape(p)})" for p in q.split())
-        matches = [
+        matching = [
             r for r in candidates
             if re.search(q_regex, r.get("name", ""), re.I)
         ]
-        if matches:
-            return max(matches, key=lambda r: int(r.get("seeders", 0)))
+        if matching:
+            return max(matching, key=lambda r: int(r.get("seeders", 0)))
     return max(candidates, key=lambda r: int(r.get("seeders", 0)))
 
 def season_is_empty_in_kodi(kodi_eps, season):
@@ -150,10 +152,7 @@ def get_existing_episodes(series_id):
         return set()
     conn = get_mysql_connection()
     cur = conn.cursor(dictionary=True)
-    cur.execute(
-        "SELECT c12 AS season, c13 AS episode FROM episode WHERE idShow = %s",
-        (series_id,)
-    )
+    cur.execute("SELECT c12 AS season, c13 AS episode FROM episode WHERE idShow = %s", (series_id,))
     eps = {(int(r["season"]), int(r["episode"])) for r in cur.fetchall()}
     cur.close()
     conn.close()
@@ -161,22 +160,38 @@ def get_existing_episodes(series_id):
 
 # ================= qBittorrent =================
 def qbittorrent_login(session):
-    r = session.post(
-        f"{QBITTORRENT_URL}/api/v2/auth/login",
-        data={"username": QBITTORRENT_USERNAME, "password": QBITTORRENT_PASSWORD}
-    )
+    r = session.post(f"{QBITTORRENT_URL}/api/v2/auth/login",
+                     data={"username": QBITTORRENT_USERNAME, "password": QBITTORRENT_PASSWORD})
     if r.text != "Ok.":
         raise RuntimeError("qBittorrent login mislukt")
+
+def get_existing_qbittorrent_hashes():
+    session = requests.Session()
+    qbittorrent_login(session)
+    r = session.get(f"{QBITTORRENT_URL}/api/v2/sync/maindata", params={"rid": 0})
+    r.raise_for_status()
+    data = r.json()
+    torrents = data.get("torrents", {})
+    return {h.lower() for h in torrents.keys()}
 
 def add_magnet_to_qbittorrent(magnet, save_path):
     session = requests.Session()
     qbittorrent_login(session)
-    r = session.post(
-        f"{QBITTORRENT_URL}/api/v2/torrents/add",
-        data={"urls": magnet, "paused": "false", "savepath": save_path}
-    )
+    r = session.post(f"{QBITTORRENT_URL}/api/v2/torrents/add",
+                     data={"urls": magnet, "paused": "false", "savepath": save_path})
     if r.status_code == 200:
         logging.info("Magnet toegevoegd: %s → %s", magnet, save_path)
+
+def add_magnet_if_not_exists(info_hash, magnet, save_path, display_name):
+    existing_hashes = get_existing_qbittorrent_hashes()
+    if info_hash.lower() in existing_hashes:
+        logging.info(
+            "Overslaan (al aanwezig in qBittorrent): %s",
+            display_name
+        )
+        return False
+    add_magnet_to_qbittorrent(magnet, save_path)
+    return True
 
 # ================= TPB =================
 def search_tpb(query):
@@ -201,28 +216,18 @@ def get_series_episodes(imdb_id, seasons_filter=None):
         data = r.json()
 
         for ep in data.get("episodes", []):
-            s = ep.get("season")
-            e = ep.get("episodeNumber")
+            s, e = ep.get("season"), ep.get("episodeNumber")
             rd = ep.get("releaseDate")
-
             if not (s and e and rd):
                 continue
-
-            s = int(s)
-            if seasons_filter and s not in seasons_filter:
+            if seasons_filter and int(s) not in seasons_filter:
                 continue
-
             year = rd.get("year")
             month = rd.get("month", 12)
             day = rd.get("day", 31)
-
-            try:
-                d = datetime.date(year, month, day)
-            except Exception:
-                continue
-
+            d = datetime.date(year, month, day)
             if d <= yesterday:
-                episodes.add((s, int(e)))
+                episodes.add((int(s), int(e)))
 
         page_token = data.get("nextPageToken")
         if not page_token:
@@ -234,21 +239,19 @@ def get_series_episodes(imdb_id, seasons_filter=None):
 def process_series(entry):
     title = entry["title"]
     imdb_id = entry.get("imdb_id")
-
-    raw_seasons = entry.get("seasons", [])
-    seasons_filter = {int(s) for s in raw_seasons} if raw_seasons else None
+    seasons_filter = entry.get("seasons") or None
+    if seasons_filter:
+        seasons_filter = [int(s) for s in seasons_filter]
 
     kodi_id = get_kodi_id_from_imdb(imdb_id) if USE_MYSQL else None
     kodi_eps = get_existing_episodes(kodi_id)
+    imdb_eps = get_series_episodes(imdb_id, seasons_filter=seasons_filter)
 
-    imdb_eps = get_series_episodes(imdb_id, seasons_filter)
     todo = sorted(imdb_eps - kodi_eps)
 
     logging.info("=== Serie controleren: %s ===", title)
-    logging.info(
-        "Kodi afleveringen: %d | IMDb afleveringen: %d | Te downloaden: %d",
-        len(kodi_eps), len(imdb_eps), len(todo)
-    )
+    logging.info("Kodi afleveringen: %d | IMDb afleveringen: %d | Te downloaden: %d",
+                 len(kodi_eps), len(imdb_eps), len(todo))
 
     # Season packs
     for season in sorted({s for s, _ in todo}):
@@ -270,11 +273,10 @@ def process_series(entry):
         if season_candidates:
             best = pick_best_by_quality(season_candidates, MEDIA_QUALITIES)
             magnet = f"magnet:?xt=urn:btih:{best['info_hash']}&dn={quote(best['name'])}"
-            add_magnet_to_qbittorrent(magnet, SAVE_PATH_SERIES)
-            logging.info(
-                "Season-pack toegevoegd: %s Season %d → %s",
-                title, season, best["name"]
-            )
+            added = add_magnet_if_not_exists(best['info_hash'], magnet, SAVE_PATH_SERIES, best['name'])
+            if added:
+                logging.info("Season-pack toegevoegd: %s Season %d → %s",
+                             title, season, best["name"])
             todo = [t for t in todo if t[0] != season]
 
     # Episode fallback
@@ -285,19 +287,16 @@ def process_series(entry):
                 candidates.append(r)
 
         if not candidates:
-            logging.info(
-                "Niet gevonden (geen kandidaten): %s S%02dE%02d",
-                title, season, episode
-            )
+            logging.info("Niet gevonden (geen kandidaten): %s S%02dE%02d",
+                         title, season, episode)
             continue
 
         best = pick_best_by_quality(candidates, MEDIA_QUALITIES)
         magnet = f"magnet:?xt=urn:btih:{best['info_hash']}&dn={quote(best['name'])}"
-        add_magnet_to_qbittorrent(magnet, SAVE_PATH_SERIES)
-        logging.info(
-            "Toegevoegd: %s S%02dE%02d → %s",
-            title, season, episode, best["name"]
-        )
+        added = add_magnet_if_not_exists(best['info_hash'], magnet, SAVE_PATH_SERIES, best['name'])
+        if added:
+            logging.info("Toegevoegd: %s S%02dE%02d → %s",
+                         title, season, episode, best["name"])
 
 def process_film(entry):
     title = entry["title"]
@@ -308,8 +307,10 @@ def process_film(entry):
         logging.info("Film al aanwezig in Kodi: %s", title)
         return
 
+    candidates = []
     query = " ".join(filter(None, [title, str(year) if year else None]))
-    candidates = search_tpb(query)
+    for r in search_tpb(query):
+        candidates.append(r)
 
     if not candidates:
         logging.info("Film niet gevonden: %s", title)
@@ -317,8 +318,9 @@ def process_film(entry):
 
     best = pick_best_by_quality(candidates, MEDIA_QUALITIES)
     magnet = f"magnet:?xt=urn:btih:{best['info_hash']}&dn={quote(best['name'])}"
-    add_magnet_to_qbittorrent(magnet, SAVE_PATH_MOVIES)
-    logging.info("Film toegevoegd: %s → %s", title, best["name"])
+    added = add_magnet_if_not_exists(best['info_hash'], magnet, SAVE_PATH_MOVIES, best['name'])
+    if added:
+        logging.info("Film toegevoegd: %s → %s", title, best["name"])
 
 # ================= Main =================
 def run_all_searches():
