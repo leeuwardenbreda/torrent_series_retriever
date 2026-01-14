@@ -22,7 +22,6 @@ IMDB_API_BASE = os.getenv("IMDB_API_BASE", "https://api.imdbapi.dev")
 CONFIG_FILE = Path(os.getenv("MEDIA_CONFIG_FILE", "./media_config.json"))
 LOG_FILE = Path(os.getenv("LOG_FILE", "./logs/media_retriever.log"))
 
-# Configurabele downloadmappen
 SAVE_PATH_SERIES = os.getenv("SAVE_PATH_SERIES", "./series")
 SAVE_PATH_MOVIES = os.getenv("SAVE_PATH_MOVIES", "./movies")
 
@@ -34,14 +33,82 @@ logging.basicConfig(
     handlers=[logging.FileHandler(LOG_FILE), logging.StreamHandler()]
 )
 
-# ================= Helpers =================
-def sanitize_filename(name: str) -> str:
-    return re.sub(r'[\\/*?:"<>|]', "_", name)
+# ================= Quality Definitions =================
+VIDEO_QUALITIES = [
+    "2160p", "4K", "UHD",
+    "1080p", "FullHD", "FHD",
+    "720p", "HD",
+    "576p", "480p", "SD",
+]
 
-# ================= Config loader =================
+AUDIO_QUALITIES = [
+    "Atmos", "Dolby Atmos", "DTS-X",
+    "TrueHD", "DTS-HD MA", "DTS-HD",
+    "7.1", "5.1",
+    "DDP", "DD", "AAC",
+    "2.0",
+]
+
+CODEC_QUALITIES = [
+    "H265", "HEVC", "X265",
+    "H264", "X264",
+]
+
+SOURCE_QUALITIES = [
+    "BluRay", "WEB-DL", "WEBRip", "WEB", "HDTV",
+]
+
+def build_media_qualities():
+    combos = []
+    for v in VIDEO_QUALITIES:
+        for a in AUDIO_QUALITIES:
+            for c in CODEC_QUALITIES:
+                combos.append(f"{v} {a} {c}")
+            combos.append(f"{v} {a}")
+        for c in CODEC_QUALITIES:
+            combos.append(f"{v} {c}")
+        combos.append(v)
+    combos.extend(SOURCE_QUALITIES)
+    combos.append("")
+    return combos
+
+MEDIA_QUALITIES = build_media_qualities()
+
+# ================= Helpers =================
+def pick_best_by_quality(candidates, qualities):
+    for q in qualities:
+        q_regex = "".join(f"(?=.*{re.escape(p)})" for p in q.split())
+        matches = [
+            r for r in candidates
+            if re.search(q_regex, r.get("name", ""), re.I)
+        ]
+        if matches:
+            return max(matches, key=lambda r: int(r.get("seeders", 0)))
+    return max(candidates, key=lambda r: int(r.get("seeders", 0)))
+
+def season_is_empty_in_kodi(kodi_eps, season):
+    return not any(s == season for s, _ in kodi_eps)
+
+def is_valid_season_pack(title, season, torrent_name, num_files, num_episodes):
+    name = torrent_name.lower()
+    title_re = re.escape(title.lower())
+
+    if not (
+        re.search(rf"{title_re}.*season\s*{season}\b", name)
+        or re.search(rf"{title_re}.*s{season:02}\b", name)
+    ):
+        return False
+
+    if re.search(r"s\d{2}e\d{2}", name):
+        return False
+
+    if num_files < num_episodes:
+        return False
+
+    return True
+
+# ================= Config =================
 def read_config_file(path: Path) -> dict:
-    if not path.exists():
-        raise FileNotFoundError(path)
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
@@ -68,8 +135,7 @@ def get_kodi_id_from_imdb(imdb_id):
                 continue
             clean = re.sub(r'^<.*?>|</.*?>$', '', raw).strip()
             try:
-                data = json.loads(clean)
-                if data.get("imdb") == imdb_id:
+                if json.loads(clean).get("imdb") == imdb_id:
                     return row["idShow"]
             except json.JSONDecodeError:
                 continue
@@ -84,17 +150,21 @@ def get_existing_episodes(series_id):
         return set()
     conn = get_mysql_connection()
     cur = conn.cursor(dictionary=True)
-    cur.execute("SELECT c12 AS season, c13 AS episode FROM episode WHERE idShow = %s", (series_id,))
-    episodes = {(int(r["season"]), int(r["episode"])) for r in cur.fetchall()}
+    cur.execute(
+        "SELECT c12 AS season, c13 AS episode FROM episode WHERE idShow = %s",
+        (series_id,)
+    )
+    eps = {(int(r["season"]), int(r["episode"])) for r in cur.fetchall()}
     cur.close()
     conn.close()
-    return episodes
+    return eps
 
 # ================= qBittorrent =================
-def qbittorrent_login(session: requests.Session):
-    r = session.post(f"{QBITTORRENT_URL}/api/v2/auth/login",
-                     data={"username": QBITTORRENT_USERNAME, "password": QBITTORRENT_PASSWORD},
-                     timeout=10)
+def qbittorrent_login(session):
+    r = session.post(
+        f"{QBITTORRENT_URL}/api/v2/auth/login",
+        data={"username": QBITTORRENT_USERNAME, "password": QBITTORRENT_PASSWORD}
+    )
     if r.text != "Ok.":
         raise RuntimeError("qBittorrent login mislukt")
 
@@ -103,277 +173,160 @@ def add_magnet_to_qbittorrent(magnet, save_path):
     qbittorrent_login(session)
     r = session.post(
         f"{QBITTORRENT_URL}/api/v2/torrents/add",
-        data={
-            "urls": magnet,
-            "paused": "false",
-            "savepath": save_path
-        },
-        timeout=10
+        data={"urls": magnet, "paused": "false", "savepath": save_path}
     )
     if r.status_code == 200:
         logging.info("Magnet toegevoegd: %s → %s", magnet, save_path)
-    else:
-        logging.error("qBittorrent fout: %s %s", r.status_code, r.text)
 
 # ================= TPB =================
 def search_tpb(query):
     try:
-        r = requests.get(f"https://apibay.org/q.php?q={quote(query)}&cat=0", timeout=20)
+        r = requests.get(f"https://apibay.org/q.php?q={quote(query)}", timeout=20)
         time.sleep(0.5)
-        if r.status_code == 429:
-            time.sleep(10)
-            return search_tpb(query)
         if not r.text.startswith("["):
             return []
         return json.loads(r.text)
-    except Exception as e:
-        logging.error("TPB zoekfout: %s", e)
+    except Exception:
         return []
 
 # ================= IMDb =================
 def get_series_episodes(imdb_id, seasons_filter=None):
-    if not imdb_id:
-        return set()
     episodes = set()
-    page_token = None
     yesterday = (datetime.datetime.now() - datetime.timedelta(days=1)).date()
-    try:
-        while True:
-            params = {}
-            if page_token:
-                params["pageToken"] = page_token
-            r = requests.get(f"{IMDB_API_BASE}/titles/{imdb_id}/episodes",
-                             headers={"Accept": "application/json"},
-                             params=params, timeout=15)
-            r.raise_for_status()
-            data = r.json()
-            for ep in data.get("episodes", []):
-                s = ep.get("season")
-                e = ep.get("episodeNumber")
-                rd = ep.get("releaseDate")
-                if s is None or e is None:
-                    continue
-                if seasons_filter and int(s) not in seasons_filter:
-                    continue
-                if rd:
-                    try:
-                        d = datetime.date(rd["year"], rd["month"], rd["day"])
-                        if d <= yesterday:
-                            episodes.add((int(s), int(e)))
-                    except Exception:
-                        pass
-            page_token = data.get("nextPageToken")
-            if not page_token:
-                break
-    except Exception as e:
-        logging.error("IMDb fout (%s): %s", imdb_id, e)
+    page_token = None
+
+    while True:
+        params = {"pageToken": page_token} if page_token else {}
+        r = requests.get(f"{IMDB_API_BASE}/titles/{imdb_id}/episodes", params=params)
+        data = r.json()
+
+        for ep in data.get("episodes", []):
+            s = ep.get("season")
+            e = ep.get("episodeNumber")
+            rd = ep.get("releaseDate")
+
+            if not (s and e and rd):
+                continue
+
+            s = int(s)
+            if seasons_filter and s not in seasons_filter:
+                continue
+
+            year = rd.get("year")
+            month = rd.get("month", 12)
+            day = rd.get("day", 31)
+
+            try:
+                d = datetime.date(year, month, day)
+            except Exception:
+                continue
+
+            if d <= yesterday:
+                episodes.add((s, int(e)))
+
+        page_token = data.get("nextPageToken")
+        if not page_token:
+            break
+
     return episodes
 
 # ================= Processing =================
 def process_series(entry):
     title = entry["title"]
     imdb_id = entry.get("imdb_id")
-    seasons = entry.get("seasons")
 
-    kodi_id = entry.get("kodi_id")
-    if USE_MYSQL and not kodi_id:
-        kodi_id = get_kodi_id_from_imdb(imdb_id)
-        entry["kodi_id"] = kodi_id
+    raw_seasons = entry.get("seasons", [])
+    seasons_filter = {int(s) for s in raw_seasons} if raw_seasons else None
 
+    kodi_id = get_kodi_id_from_imdb(imdb_id) if USE_MYSQL else None
     kodi_eps = get_existing_episodes(kodi_id)
-    imdb_eps = get_series_episodes(imdb_id, seasons)
-    todo = imdb_eps - kodi_eps
+
+    imdb_eps = get_series_episodes(imdb_id, seasons_filter)
+    todo = sorted(imdb_eps - kodi_eps)
 
     logging.info("=== Serie controleren: %s ===", title)
-    logging.info("Kodi afleveringen: %d | IMDb afleveringen: %d | Te downloaden: %d",
-                 len(kodi_eps), len(imdb_eps), len(todo))
+    logging.info(
+        "Kodi afleveringen: %d | IMDb afleveringen: %d | Te downloaden: %d",
+        len(kodi_eps), len(imdb_eps), len(todo)
+    )
 
-    qualities = [
-        "2160p 10bit HDR Atmos DTS-X 7.1 H265",
-        "2160p 10bit HDR Atmos DTS-HD 7.1 H265",
-        "2160p 10bit HDR Atmos TrueHD 7.1 H265",
-        "2160p 10bit HDR Atmos DDP 5.1 H265",
-        "2160p 10bit HDR DTS-X 7.1 H265",
-        "2160p 10bit HDR DTS-HD 7.1 H265",
-        "2160p 10bit HDR DTS 5.1 H265",
-        "2160p HDR Atmos DTS-X 7.1 H265",
-        "2160p HDR Atmos DTS-HD 7.1 H265",
-        "2160p HDR Atmos DTS 5.1 H265",
-        "2160p HDR DTS-X 7.1 H265",
-        "2160p HDR DTS-HD 7.1 H265",
-        "2160p HDR DTS 5.1 H265",
-        "2160p 10bit DTS-X 7.1 H265",
-        "2160p 10bit DTS-HD 7.1 H265",
-        "2160p Atmos DTS 5.1 H265",
-        "2160p Atmos 7.1 H265",
-        "2160p Atmos 5.1 H265",
-        "2160p 7.1 DTS-X H265",
-        "2160p 7 1 DTS-HD H265",
-        "2160p 5.1 DTS H265",
-        "2160p 5 1 DTS H265",
-        "2160p H265",
-        "2160p HEVC",
-        "2160p UHD BluRay",
-        "2160p UHD WEB-DL",
-        "2160p WEB-DL H265",
-        "2160p WEB-DL",
-        "2160p BluRay",
-        "2160p UHD",
-        "2160p",
+    # Season packs
+    for season in sorted({s for s, _ in todo}):
+        if not season_is_empty_in_kodi(kodi_eps, season):
+            continue
 
-        "1080p 10bit HDR Atmos DTS-X 7.1 H265",
-        "1080p 10bit HDR Atmos DTS-HD 7.1 H265",
-        "1080p 10bit HDR DTS-X 7.1 H265",
-        "1080p 10bit HDR DTS-HD 7.1 H265",
-        "1080p HDR Atmos DTS 5.1 H265",
-        "1080p HDR DTS-X 7.1 H265",
-        "1080p HDR DTS-HD 7.1 H265",
-        "1080p HDR DTS 5.1 H265",
-        "1080p Atmos DTS-X 7.1 H265",
-        "1080p Atmos DTS-HD 7.1",
-        "1080p Atmos DTS 5.1",
-        "1080p 7.1 DTS-X",
-        "1080p 7 1 DTS-HD",
-        "1080p 5.1 DTS",
-        "1080p 5 1 DTS",
-        "1080p H265",
-        "1080p HEVC",
-        "1080p BluRay DTS",
-        "1080p BluRay",
-        "1080p WEB-DL H265",
-        "1080p WEB-DL",
-        "1080p WEBRip",
-        "1080p HDTV",
-        "1080p Proper",
-        "1080p Repack",
+        season_candidates = []
+        for q in (f"{title} S{season:02}", f"{title} Season {season}"):
+            for r in search_tpb(q):
+                if is_valid_season_pack(
+                    title,
+                    season,
+                    r.get("name", ""),
+                    int(r.get("num_files", 1)),
+                    len([e for s, e in imdb_eps if s == season])
+                ):
+                    season_candidates.append(r)
 
-        "720p DTS 5.1",
-        "720p 5.1 DTS",
-        "720p H265",
-        "720p BluRay",
-        "720p WEB-DL",
-        "720p WEBRip",
-        "720p HDTV",
-        "720p Proper",
-        "720p Repack",
-        "720p",
+        if season_candidates:
+            best = pick_best_by_quality(season_candidates, MEDIA_QUALITIES)
+            magnet = f"magnet:?xt=urn:btih:{best['info_hash']}&dn={quote(best['name'])}"
+            add_magnet_to_qbittorrent(magnet, SAVE_PATH_SERIES)
+            logging.info(
+                "Season-pack toegevoegd: %s Season %d → %s",
+                title, season, best["name"]
+            )
+            todo = [t for t in todo if t[0] != season]
 
-        "576p",
-        "480p",
-        "SD",
-
-        "BluRay",
-        "WEB-DL",
-        "WEBRip",
-        "HDTV",
-
-        "DTS-X",
-        "DTS-HD",
-        "DTS",
-        "DTX",
-        "Atmos",
-        "TrueHD",
-        "DDP",
-
-        "H265",
-        "H264",
-        "HEVC",
-        "X265",
-        "X264",
-
-        "FullHD",
-        "FHD",
-        "1080p",
-        "HD",
-
-        "SDTV",
-        "Low Quality",
-        "Unknown",
-        "Any",
-        ""
-    ]
+    # Episode fallback
     for season, episode in todo:
-        found = False
+        candidates = []
+        for r in search_tpb(f"{title} s{season:02}e{episode:02}"):
+            if re.search(r"S\d{2}E\d{2}", r.get("name", ""), re.I):
+                candidates.append(r)
 
-        # === Stap 1: eerst zoeken zonder quality ===
-        base_query = f"{title} s{season:02}e{episode:02}"
-        base_results = search_tpb(base_query)
+        if not candidates:
+            logging.info(
+                "Niet gevonden (geen kandidaten): %s S%02dE%02d",
+                title, season, episode
+            )
+            continue
 
-        if not (
-            base_results
-            and re.search(r"S\d{2}E\d{2}", base_results[0].get("name", ""), re.I)
-        ):
-            logging.info("Niet gevonden (geen geldige basisresultaten): %s S%02dE%02d", title, season, episode)
-            continue  # stoppen als er geen geldige SxxExx match is
-
-        # === Stap 2: basisresultaat gevonden → qualities aflopen zoals voorheen ===
-        for q in qualities:
-            query = f"{title} s{season:02}e{episode:02} {q}"
-            for r in search_tpb(query):
-                name = r.get("name", "")
-                if name and re.search(r"S\d{2}E\d{2}", name, re.I):
-                    magnet = f"magnet:?xt=urn:btih:{r['info_hash']}&dn={quote(name)}"
-                    add_magnet_to_qbittorrent(magnet, save_path=SAVE_PATH_SERIES)
-                    logging.info("Toegevoegd: %s S%02dE%02d → %s", title, season, episode, name)
-                    found = True
-                    break
-            if found:
-                break
-
-        if not found:
-            logging.info("Niet gevonden met qualities: %s S%02dE%02d", title, season, episode)
-
-
+        best = pick_best_by_quality(candidates, MEDIA_QUALITIES)
+        magnet = f"magnet:?xt=urn:btih:{best['info_hash']}&dn={quote(best['name'])}"
+        add_magnet_to_qbittorrent(magnet, SAVE_PATH_SERIES)
+        logging.info(
+            "Toegevoegd: %s S%02dE%02d → %s",
+            title, season, episode, best["name"]
+        )
 
 def process_film(entry):
     title = entry["title"]
     imdb_id = entry.get("imdb_id")
     year = entry.get("year")
 
-    # Controleer Kodi: als film al bestaat, niet downloaden
-    kodi_id = None
-    if USE_MYSQL and imdb_id:
-        kodi_id = get_kodi_id_from_imdb(imdb_id)
-    if kodi_id:
+    if USE_MYSQL and get_kodi_id_from_imdb(imdb_id):
         logging.info("Film al aanwezig in Kodi: %s", title)
         return
 
-    logging.info("=== Film controleren: %s ===", title)
+    query = " ".join(filter(None, [title, str(year) if year else None]))
+    candidates = search_tpb(query)
 
-    qualities = ["2160p HDR", "2160p", "h265", "1080p BluRay", "1080p WEB-DL", "1080p"]
-    found = False
-    for q in qualities:
-        parts = [title]
-        if year:
-            parts.append(str(year))
-        parts.append(q)
-        query = " ".join(parts)
-        for r in search_tpb(query):
-            name = r.get("name", "")
-            if name:
-                magnet = f"magnet:?xt=urn:btih:{r['info_hash']}&dn={quote(name)}"
-                add_magnet_to_qbittorrent(magnet, save_path=SAVE_PATH_MOVIES)
-                logging.info("Film toegevoegd: %s → %s", title, name)
-                found = True
-                break
-        if found:
-            break
-    if not found:
+    if not candidates:
         logging.info("Film niet gevonden: %s", title)
+        return
+
+    best = pick_best_by_quality(candidates, MEDIA_QUALITIES)
+    magnet = f"magnet:?xt=urn:btih:{best['info_hash']}&dn={quote(best['name'])}"
+    add_magnet_to_qbittorrent(magnet, SAVE_PATH_MOVIES)
+    logging.info("Film toegevoegd: %s → %s", title, best["name"])
 
 # ================= Main =================
 def run_all_searches():
     config = read_config_file(CONFIG_FILE)
     for s in config.get("series", []):
-        try:
-            process_series(s)
-        except Exception as e:
-            logging.error("Serie fout (%s): %s", s.get("title"), e)
+        process_series(s)
     for f in config.get("films", []):
-        try:
-            process_film(f)
-        except Exception as e:
-            logging.error("Film fout (%s): %s", f.get("title"), e)
+        process_film(f)
 
 if __name__ == "__main__":
     logging.info("Media Retriever gestart")
